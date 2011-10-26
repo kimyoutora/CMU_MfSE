@@ -74,6 +74,21 @@ Factory.define :awe_smith, :parent => :person do |p|
   p.webiso_account "awesm@andrew.cmu.edu"
 end
 
+Factory.define :aj_cave, :parent => :person do |p|
+  p.is_student 1
+  p.is_part_time 1
+  p.graduation_year "2012"
+  p.masters_program  "SE"
+  p.masters_track  "Tech"
+  p.twiki_name "AjCave"
+  p.first_name "AJ"
+  p.last_name "Cave"
+  p.human_name "AJ Cave"
+  p.image_uri "/images/mascot.jpg"
+  p.email "aj.cave@sv.cmu.edu"
+  p.webiso_account "acave@andrew.cmu.edu"
+end
+
 sleep(0.02)
 
 Factory.define :betty_ross, :parent => :person do |p|
