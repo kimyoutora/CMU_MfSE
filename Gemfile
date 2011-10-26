@@ -14,6 +14,7 @@ gem "webrobots", "~> 0.0.10", :git => 'git://github.com/knu/webrobots.git' #As o
 gem 'omniauth', '0.3.0.rc3'
 gem 'devise'
 
+gem 'pg'
 
 #gem 'ruby-openid'
 #gem 'ruby-openid-apps-discovery'
