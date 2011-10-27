@@ -14,8 +14,6 @@ gem "webrobots", "~> 0.0.10", :git => 'git://github.com/knu/webrobots.git' #As o
 gem 'omniauth', '0.3.0.rc3'
 gem 'devise'
 
-gem 'pg'
-
 #gem 'ruby-openid'
 #gem 'ruby-openid-apps-discovery'
 #gem 'rack-openid'
@@ -80,6 +78,10 @@ group :development, :test do
 #  gem 'autotest-growl' if RUBY_PLATFORM =~ /darwin/
 
 #  gem 'test-unit' #, '1.2.3' #Downgrading so that autotest, rspec will work
+  gem 'fattr'
+  gem 'arrayfields'
+  gem 'map'
+  gem 'metric_fu'
 end
 
 
