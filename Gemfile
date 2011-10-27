@@ -37,6 +37,7 @@ gem 'rmagick'
 gem 'exception_notification', :require => 'exception_notifier'
 
 gem 'pg'
+gem 'rcov'
 
 # gem 'smtp_tls'           # Used for sending mail to gmail
 # gem 'actionmailer_gmail' # Used for sending mail to gmail

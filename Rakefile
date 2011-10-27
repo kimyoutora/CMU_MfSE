@@ -9,13 +9,13 @@ end
 CMUEducation::Application.load_tasks
 
 # Metric_fu
-require 'metric_fu'
-MetricFu::Configuration.run do |config|
-  config.rcov[:test_files] = ['spec/**/*_spec.rb']
-  config.rcov[:rcov_opts] << "-Ispec" # Needed to find spec_helper
+#require 'metric_fu'
+#MetricFu::Configuration.run do |config|
+#  config.rcov[:test_files] = ['spec/**/*_spec.rb']
+#  config.rcov[:rcov_opts] << "-Ispec" # Needed to find spec_helper
 
   #define which metrics you want to use
   # config.metrics  = [:churn, :saikuro, :stats, :flog, :flay]
-  config.metrics  = [:stats, :rcov, :flay]
-  config.graphs   = [:flog, :flay, :stats]
-end
+#  config.metrics  = [:stats, :rcov, :flay]
+#  config.graphs   = [:flog, :flay, :stats]
+#end
