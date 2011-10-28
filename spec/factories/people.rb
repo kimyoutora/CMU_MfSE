@@ -23,6 +23,19 @@ Factory.define :student_sam, :parent => :person do |p|
   p.twiki_name "StudentSam"
 end
 
+Factory.define :student_raj, :parent => :person do |p|
+  p.login "student_raj"
+  p.email "student.raj@sv.cmu.edu"
+  p.webiso_account "raj@andrew.cmu.edu"
+  p.is_student true
+  p.is_alumnus false
+  p.first_name "Student"
+  p.last_name "Raj"
+  p.human_name "Student Raj"
+  p.twiki_name "StudentRaj"
+end
+
+
 Factory.define :student_sally, :parent => :person do |p|
   p.login "student_sally"
   p.email "student.sally@sv.cmu.edu"

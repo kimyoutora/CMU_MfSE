@@ -6,4 +6,5 @@ Factory.define :team_triumphant, :parent => :team do |t|
  t.twiki_space "http://info.sv.cmu.edu/twiki/bin/view/Graffiti/WebHome"
  t.association :course, :factory => :course
  t.after_create { |t| Factory(:student_sam, :teams => [t], :login => "student_sam_random", :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu")}
+ t.after_create { |t| Factory(:student_raj, :teams => [t], :login => "student_raj_random", :webiso_account => Time.now.to_f.to_s + "@andrew.cmu.edu")}
 end
