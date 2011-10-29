@@ -60,12 +60,68 @@ describe Deliverable do
     deliverable.owner_email.should be_equal(deliverable.creator.email)
   end
   
+  it "should not have a team name for an individual deliverable" do
+	deliverable = Factory(:individual_deliverable)
+	deliverable.team_id.should == nil
+  end
+  
+  it "team deliverable creator should be Sam" do
+	team_deliverable = Factory.build(:team_deliverable)
+	team_deliverable.stub(:update_team)
+	team_deliverable.save
+	team_deliverable.creator.human_name.should == "Student Sam"
+  end
+  
   it "should return a list of team deliverables and individual deliverables" do
      @teams = Team.all
 	 @student = Factory(:student_raj)
      @deliverables = Deliverable.find_by_person_and_teams(@student,@teams)
 	 @deliverables.size.should >= 0
   end
+  
+  it "should return current deliverables for Sam" do
+	@student = Factory(:student_sam)
+	deliverable = Deliverable.find_current_by_person(@student)
+	deliverable.size.should > 0
+  end
+  
+  it "should return past deliverables for Raj" do
+	student = Factory(:student_raj)
+	deliverable = Deliverable.find_past_by_person(student)
+	deliverable.size.should == 0
+  end
+  
+  it "should submit notification email to faculty with task number" do
+	@student = Factory.build(:student_sam)
+	@deliverable = Factory.build(:individual_deliverable)
+	@deliverable.stub(:task_number => 1)
+	@deliverable.send_deliverable_upload_email("http://rails.sv.cmu.edu")
+  end
+  
+  it "should submit email with course name" do
+	@student = Factory.build(:student_sam)
+	@course = Factory.build(:fse)
+	@deliverable = Factory.build(:team_deliverable)
+	@deliverable.stub(:course => @course)
+	@deliverable.send_deliverable_upload_email("http://rails.sv.cmu.edu")
+  end
+    
+  it "should receive feedback email with task number" do
+	@student = Factory.build(:student_sam)
+	@deliverable = Factory.build(:individual_deliverable)
+	@deliverable.stub(:task_number => 1)
+	@deliverable.send_deliverable_feedback_email("http://rails.sv.cmu.edu")
+  end
+  
+  it "should receive feedback email with course name" do
+	@student = Factory.build(:student_sam)
+	@course = Factory.build(:fse)
+	@deliverable = Factory.build(:individual_deliverable)
+	@deliverable.stub(:course => @course)
+	@deliverable.send_deliverable_feedback_email("http://rails.sv.cmu.edu")
+	#with(hash_including(:message => "Feedback has been submitted for Foundations"))
+  end
+
 
   context "has_feedback?" do
   it "returns false when there is no feedback" do
