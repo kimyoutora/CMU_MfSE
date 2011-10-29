@@ -78,6 +78,18 @@ describe Deliverable do
      @deliverables = Deliverable.find_by_person_and_teams(@student,@teams)
 	 @deliverables.size.should >= 0
   end
+  
+  it "should return current deliverables for Sam" do
+	@student = Factory(:student_sam)
+	deliverable = Deliverable.find_current_by_person(@student)
+	deliverable.size.should > 0
+  end
+  
+  it "should return past deliverables for Raj" do
+	student = Factory(:student_raj)
+	deliverable = Deliverable.find_past_by_person(student)
+	deliverable.size.should == 0
+  end
 
   context "has_feedback?" do
   it "returns false when there is no feedback" do

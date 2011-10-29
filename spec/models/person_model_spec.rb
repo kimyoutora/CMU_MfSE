@@ -9,6 +9,7 @@ describe Person do
     @faculty_fagan = Factory(:faculty_fagan)
     @admin_andy = Factory(:admin_andy)
     @student_sam = Factory(:student_sam)
+	@student_raj = Factory(:student_raj)
   end
 
   context "photo upload" do
@@ -22,6 +23,11 @@ describe Person do
       @student_sam.photo = File.new(File.join(Rails.root,'spec','fixtures', "sample_photo.gif"))
       @student_sam.should be_valid
     end
+	
+	it "accepts JPEG files" do
+	  @student_sam.photo = File.new(File.join(Rails.root,'spec','fixtures', "sample_photo.jpg"))
+      @student_sam.should be_valid
+	end
 
     it "should update image_uri after photo is uploaded", :skip_on_build_machine => true do
       @student_sam.photo = File.new(File.join(Rails.root,'spec','fixtures', "sample_photo.jpg"))
@@ -231,6 +237,21 @@ describe Person do
         assert_equal(names[1], expected_names[1])
       end
     end
+	
+	it "creates a Twiki for Raj" do
+		student = Factory(:student_raj)
+		student.create_twiki_account.should be_true
+	end
+	
+	it "creates a google email for Sam" do
+	   student = Factory(:student_sam)
+	   student.create_google_email.should be_equal(student)
+	end
+	
+	it "should reset twiki password for Raj" do
+	   student_raj = Factory(:student_raj)
+	   student_raj.reset_twiki_password.should be_true
+	end
     
   end
 
