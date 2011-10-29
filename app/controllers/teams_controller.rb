@@ -308,22 +308,6 @@ class TeamsController < ApplicationController
     redirect_to(peer_evaluation_path(@team.course, @team.id))
   end
 
-
-#  private
-#  def handle_teams_people
-#    logger.debug("handle_teams_people()")
-#    if params['person_ids']
-#      logger.debug("**************")
-#      @team.people.clear
-#      people = params['person_ids'].map { |id| Person.find(id) }
-#      logger.debug("part 2")
-#      logger.debug(people)
-#      @team.people << people
-#    end
-##  rescue
-##    logger.debug "record not found"
-#  end
-
   def update_course_faculty_label
     @course = Course.find(params[:course_name])
     if @course.primary_faculty_label != params[:primary_faculty_label] || @course.secondary_faculty_label != params[:seconday_faculty_label] then
