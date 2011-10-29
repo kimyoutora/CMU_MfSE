@@ -90,6 +90,38 @@ describe Deliverable do
 	deliverable = Deliverable.find_past_by_person(student)
 	deliverable.size.should == 0
   end
+  
+  it "should submit notification email to faculty with task number" do
+	@student = Factory.build(:student_sam)
+	@deliverable = Factory.build(:individual_deliverable)
+	@deliverable.stub(:task_number => 1)
+	@deliverable.send_deliverable_upload_email("http://rails.sv.cmu.edu")
+  end
+  
+  it "should submit email with course name" do
+	@student = Factory.build(:student_sam)
+	@course = Factory.build(:fse)
+	@deliverable = Factory.build(:team_deliverable)
+	@deliverable.stub(:course => @course)
+	@deliverable.send_deliverable_upload_email("http://rails.sv.cmu.edu")
+  end
+    
+  it "should receive feedback email with task number" do
+	@student = Factory.build(:student_sam)
+	@deliverable = Factory.build(:individual_deliverable)
+	@deliverable.stub(:task_number => 1)
+	@deliverable.send_deliverable_feedback_email("http://rails.sv.cmu.edu")
+  end
+  
+  it "should receive feedback email with course name" do
+	@student = Factory.build(:student_sam)
+	@course = Factory.build(:fse)
+	@deliverable = Factory.build(:individual_deliverable)
+	@deliverable.stub(:course => @course)
+	@deliverable.send_deliverable_feedback_email("http://rails.sv.cmu.edu")
+	#with(hash_including(:message => "Feedback has been submitted for Foundations"))
+  end
+
 
   context "has_feedback?" do
   it "returns false when there is no feedback" do
