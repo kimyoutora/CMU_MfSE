@@ -74,6 +74,65 @@ describe TeamsController do
       it_should_behave_like "permission denied"
     end
 
+    describe "#twiki_new" do
+      it "should redirect to something reasonable and not raise exception" do
+        controller.stub(:get_twiki_http_referer => "http://info.sv.cmu.edu/twiki/bin/view/Fall2008/Foundations/StudentTeams
+")
+        lambda {
+          get :twiki_new
+        }.should_not raise_exception
+      end
+
+      it "should be able to create the new course" do
+        course = Factory.create(:course, :twiki_url => "http://info.sv.cmu.edu/twiki/bin/view/Fall2008/Foundations/StudentTeams")
+        controller.stub(:get_twiki_http_referer => course.twiki_url)
+        Course.should_receive(:find).and_return(course)
+
+        get :twiki_new
+        assigns(:course).should_not be_nil
+      end
+    end
+
+
+    describe "#remove_team_member" do
+      it "should be success" do
+        team = Factory.create(:team_triumphant)
+        delete :remove_team_member, {:team_id => team.id}
+        response.should be_success
+      end
+    end
+
+    describe "#peer_evaluation" do
+      it "should be success" do
+        team = Factory.create(:team_triumphant)
+        person = Factory.create(:person, :first_name => "foo", :last_name => "bar")
+        team.stub(:people => [person])
+        Team.should_receive(:find).with(team.id).and_return(team)
+
+        get :peer_evaluation, {:course_id => team.course_id, :id => team.id}
+        response.should be_success
+      end
+    end
+
+    describe "#peer_evaluation_update" do
+      it "should be success" do
+        team=Factory.create(:team_triumphant)
+        course = Factory.create(:course)
+        team.stub(:course => course)
+        Team.should_receive(:find).with(team.id).and_return(team)
+
+        params = {
+          :team => {
+            :peer_evaluation_second_email => Time.now
+          }
+        }
+        
+        put :peer_evaluation_update, {:id => team.id}
+        assigns(:team).should == team
+        response.should be_success
+      end
+    end
+
   end
 
   context "any staff can" do
