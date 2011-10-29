@@ -60,6 +60,18 @@ describe Deliverable do
     deliverable.owner_email.should be_equal(deliverable.creator.email)
   end
   
+  it "should not have a team name for an individual deliverable" do
+	deliverable = Factory(:individual_deliverable)
+	deliverable.team_id.should == nil
+  end
+  
+  it "team deliverable creator should be Sam" do
+	team_deliverable = Factory.build(:team_deliverable)
+	team_deliverable.stub(:update_team)
+	team_deliverable.save
+	team_deliverable.creator.human_name.should == "Student Sam"
+  end
+  
   it "should return a list of team deliverables and individual deliverables" do
      @teams = Team.all
 	 @student = Factory(:student_raj)
